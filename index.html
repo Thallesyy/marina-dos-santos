@@ -267,10 +267,11 @@
     .anim .sit-painel:not([hidden]) { animation: painel .55s var(--curva) both; }
 
     @media (min-width: 900px) {
-      .situacoes { grid-template-columns: minmax(280px, .85fr) 1.25fr; column-gap: 2rem; row-gap: .7rem; align-items: start; }
-      .sit-btn { grid-column: 1; }
-      .sit-painel { grid-column: 2; grid-row: 1 / span 6; position: sticky; top: 100px; padding: 2.4rem 2.3rem; }
-      .sit-btn[aria-expanded="true"] .sit-seta { transform: none; }
+      .js .situacoes { grid-template-columns: minmax(280px, .85fr) 1.25fr; column-gap: 2rem; row-gap: .7rem; align-items: start; }
+      .js .sit-btn { grid-column: 1; }
+      .js .sit-painel { grid-column: 2; grid-row: 1 / span 6; position: sticky; top: 100px; padding: 2.4rem 2.3rem; margin-top: 0; border-radius: 22px; border-top: 0; }
+      .js .sit-btn[aria-expanded="true"] { border-radius: 16px; }
+      .js .sit-btn[aria-expanded="true"] .sit-seta { transform: none; }
     }
 
     /* Sobre */
@@ -336,10 +337,6 @@
     /* Contato */
     .contato { background: var(--ameixa); color: var(--papel); }
     .contato-grade { display: grid; gap: 3rem; }
-    .status { display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.4rem; padding: .45rem .9rem; border-radius: 999px; background: rgba(215, 165, 169, .14); font-size: .93rem; color: var(--rosa-po); }
-    .status[hidden] { display: none; }
-    .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #9aa0a6; }
-    .status.aberto::before { background: #7bd89a; box-shadow: 0 0 0 4px rgba(123, 216, 154, .18); }
     .infos { margin-top: 2rem; display: grid; gap: 1.25rem; }
     .infos li { display: flex; gap: 1rem; align-items: flex-start; }
     .infos .icone, .infos .icone-cheio { width: 22px; height: 22px; color: var(--rosa); margin-top: .2rem; }
@@ -633,7 +630,7 @@
           <li class="passo">
             <span class="marcador" aria-hidden="true"><span>1</span></span>
             <h3>Você manda uma mensagem</h3>
-            <p>Pelo WhatsApp, conte em poucas palavras o que está acontecendo. Pode ser por texto ou áudio.</p>
+            <p>Pelo WhatsApp, conte em poucas palavras o que está acontecendo.</p>
           </li>
           <li class="passo">
             <span class="marcador" aria-hidden="true"><span>2</span></span>
@@ -689,7 +686,6 @@
         <div>
           <h2 class="sec-titulo">Vamos conversar?</h2>
           <p class="sec-lead">Estou aqui para te ouvir e orientar. Chame no WhatsApp para agendar o seu atendimento.</p>
-          <p class="status" data-status hidden></p>
 
           <ul class="infos">
             <li>
@@ -879,25 +875,6 @@
       }, { passive: true });
       window.addEventListener('resize', aoRolar);
       aoRolar();
-
-      /* Aberto agora? (horário de Brasília) */
-      var status = document.querySelector('[data-status]');
-      try {
-        var partes = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo', weekday: 'short', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
-        var pega = function (t) { return (partes.filter(function (x) { return x.type === t; })[0] || {}).value; };
-        var dias = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-        var dia = dias[pega('weekday')];
-        var min = parseInt(pega('hour'), 10) * 60 + parseInt(pega('minute'), 10);
-        var util = dia >= 1 && dia <= 5;
-        var texto, aberto = false;
-        if (util && min >= 510 && min < 1050) { aberto = true; texto = 'Aberto agora, até as 17h30'; }
-        else if (util && min < 510) { texto = 'Fechado agora. Abre hoje, às 8h30'; }
-        else if (dia >= 1 && dia <= 4) { texto = 'Fechado agora. Abre amanhã, às 8h30'; }
-        else { texto = 'Fechado agora. Abre segunda, às 8h30'; }
-        status.textContent = texto;
-        status.classList.toggle('aberto', aberto);
-        status.hidden = false;
-      } catch (e) { /* sem status se o navegador não souber o fuso */ }
 
       document.getElementById('ano').textContent = new Date().getFullYear();
     })();
