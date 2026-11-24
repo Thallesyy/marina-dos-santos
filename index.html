@@ -176,6 +176,11 @@
     .hero-oab::before { content: ""; width: 42px; height: 1px; background: var(--rosa); }
     .hero-oab span { white-space: nowrap; }
     .hero-oab span + span { padding-left: .9rem; border-left: 1px solid rgba(212, 162, 166, .5); }
+    @media (max-width: 479px) {
+      .hero-oab { flex-direction: column; align-items: flex-start; gap: .15rem; }
+      .hero-oab::before { margin-bottom: .6rem; }
+      .hero-oab span + span { padding-left: 0; border-left: 0; }
+    }
 
     .hero-foto { position: relative; order: -1; justify-self: center; width: min(100% - 18px, 300px); }
     .arco { border-radius: 50% 50% 18px 18px / 40% 40% 18px 18px; }
@@ -378,7 +383,7 @@
           <picture>
             <source type="image/webp" srcset="fotos/marina-topo-600.webp 600w, fotos/marina-topo-900.webp 900w" sizes="(min-width: 960px) 440px, 300px">
             <img class="arco" src="fotos/marina-topo-900.jpg" width="900" height="1125" fetchpriority="high"
-                 alt="Dra. Marina dos Santos sentada à mesa do escritório, com notebook">
+                 alt="Dra. Marina dos Santos, advogada">
           </picture>
           <div class="selo">
             <svg class="icone" aria-hidden="true"><use href="#i-pin"/></svg>
@@ -579,7 +584,7 @@
       </div>
       <div class="rodape-base">
         <span>© <span id="ano">2026</span> Marina dos Santos Advocacia</span>
-        <span>Conteúdo informativo, de acordo com o Provimento 205/2021 da OAB.</span>
+        <span>Conteúdo de caráter informativo.</span>
       </div>
     </div>
   </footer>
